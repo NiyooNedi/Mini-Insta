@@ -1,0 +1,24 @@
+<!-- File: update_profile_form.html
+Author: Niyoo Nedi (nnedi@bu.edu), 3/01/2026
+Description: File that will contain the form to update profiles for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+ 
+{% block content %}
+    
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h2>Update a profile!</h2>
+        
+        <form action = "{% url 'update_profile' profile.pk %}" method = 'POST' enctype="multipart/form-data">
+        
+        {{form.as_p}}
+        
+        <input type='submit' name = 'submit' value= 'Update'>
+        <p></p>
+        <a href="{% url 'profile' profile.pk %}" class="cancel-btn">Cancel</a>
+        
+        {% csrf_token %}
+        </form>
+    </div>
+ 
+{% endblock %}

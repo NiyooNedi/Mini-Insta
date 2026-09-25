@@ -1,0 +1,37 @@
+<!-- File: show_post.html
+Author: Niyoo Nedi (nnedi@bu.edu), 03/02/2026
+Description: File that contains the html that shows a specific feed from a profile for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    {% for post in posts %} 
+        <div class="specific-post">
+            <img class="posts-pic" src="{{ post.display_image_url }}" alt="">    
+
+            <p><strong display="block">{{post.profile}}</strong> {{post.caption}}</p>
+            <p>{{post.timestamp}}</p>
+            <p> <strong>Liked by </strong> {{post.get_likes}}</p>
+            <h3>Comments</h3>
+                <ul>
+                    {% for comment in post.get_all_comments %}
+                        <li>
+                            <strong>{{ comment.profile.display_name }}</strong>
+                            ({{ comment.timestamp }}):
+                            {{ comment.text }}
+                        </li>
+
+                    {% empty %}
+                        <li>No comments yet.</li>
+                        
+                    {% endfor %}
+                </ul>
+            <hr>
+        </div>
+        <p></p>
+    {% empty %} 
+        <p>No posts in your feed yet.</p>
+    {% endfor %}
+
+{% endblock %}

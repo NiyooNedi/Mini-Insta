@@ -1,0 +1,21 @@
+<!-- File: login.html
+Author: Niyoo Nedi (nnedi@bu.edu), 3/04/2026
+Description: File that contains the login page for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content%}
+    <h1>Login to Mini Insta</h1>
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Login">
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% else %}
+            <input type="hidden" name="next" value="{% url 'show_all' %}">
+        {% endif %}
+    </form>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+<!-- File: show_post.html
+Author: Niyoo Nedi (nnedi@bu.edu), 2/20/2026
+Description: File that contains the html that shows a specific post from a profile for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="specific-post">
+        {% for photo in post.get_all_photos %}
+            <img class="posts-pic" src="{{photo.get_image_url}}" alt="">     
+        {% endfor %}
+        <p><strong display="block">{{post.profile}}</strong> {{post.caption}}</p>
+        <p>{{post.timestamp}}</p>
+        <p> <strong>Liked by </strong> {{post.get_likes}}</p>
+        <h3>
+            {% if request.user.is_authenticated and request.user == profile.user %}
+                <a class="cancel-btn" href="{% url 'update_post' post.pk %}">Update Post</a>
+                <a class="cancel-btn" href="{% url 'delete_post' post.pk %}">Delete Post</a>
+            {% endif %}
+
+            {% if request.user.is_authenticated and request.user != post.profile.user %}
+                {% if is_liked %}
+                    <a href="{% url 'delete_like_post' post.pk %}">Unlike</a>
+                {% else %}
+                    <a href="{% url 'like_post' post.pk %}">Like</a>
+                {% endif %}
+            {% endif %}
+            
+        </h3>
+        <h3>Comments</h3>
+            <ul>
+                {% for comment in post.get_all_comments %}
+                    <li>
+                        <strong>{{ comment.profile.display_name }}</strong>
+                        ({{ comment.timestamp }}):
+                        {{ comment.text }}
+                    </li>
+
+                {% empty %}
+                    <li>No comments yet.</li>
+                    
+                {% endfor %}
+            </ul>
+
+    </div>
+    
+{% endblock %}

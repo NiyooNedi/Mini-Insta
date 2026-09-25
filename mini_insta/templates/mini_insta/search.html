@@ -1,0 +1,21 @@
+<!-- File: search.html
+Author: Niyoo Nedi (nnedi@bu.edu), 03/02/2026
+Description: File that contains the html that shows a form for one to make a search request in the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <h2 style="text-align: center;" >Search</h2>
+
+    <form action="{% url 'search' %}" method="GET" style="text-align: center;">
+
+        <input type="text" name="q" placeholder="Search profiles or posts..." required>
+        <p></p>
+        <button type="submit" >Search</button>
+        <a href="{% url 'profile' %}" class="cancel-btn">Cancel</a>
+        
+        {% csrf_token %}
+    </form>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<!-- File: profile.html
+Author: Niyoo Nedi (nnedi@bu.edu), 2/13/2026
+Description: File that contains the html that shows one profile for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="whole-page">
+            <div class="single-profile">
+                <h2 class="username">{{profile.username}}</h2>
+                <img class="profile-pic" src="{{profile.profile_image_url}}" alt="">
+                <h2 class="display-name">{{profile.display_name}}</h2>
+                <h2 class="followers">Followers:</h2> <p>{{profile.get_num_followers}}</p>
+                <h2 class="following">Following:</h2> <p>{{profile.get_num_following}}</p>
+                <p class="bio">{{profile.bio_text}}</p>
+                <h3>
+                    {% if request.user.is_authenticated and request.user == profile.user %}
+                        <a class="cancel-btn" href="{% url 'update_profile' %}">Update Profile</a>
+                    {% endif %}
+
+                    {% if request.user.is_authenticated and request.user != profile.user %}
+                        {% if is_following %}
+                            <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+                        {% else %}
+                            <a href="{% url 'follow' profile.pk %}">Follow</a>
+                        {% endif %}
+                    {% endif %}
+
+                    <p>Following: {{ request.user.profile.get_following }}</p>
+                </h3>
+                <hr width="100%">
+                {% for post in profile.get_all_posts %}
+                    <a href="{% url 'post' post.pk %}">
+                        <img class="posts-pic" src="{{post.display_image_url}}" alt="">
+                    </a>
+                    <p></p>
+                {% endfor %}
+
+            </div>
+    </div>
+    
+{% endblock %}

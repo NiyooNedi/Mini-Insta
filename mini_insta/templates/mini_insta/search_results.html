@@ -1,0 +1,58 @@
+<!-- File: search_results.html
+Author: Niyoo Nedi (nnedi@bu.edu), 03/02/2026
+Description: File that contains the html that shows a search results made by a profile for the mini_insta project -->
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+    <h2>Search Results for "{{ query }}"</h2>
+
+    <h3>Matching Profiles</h3>
+
+        {% for p in profiles %}
+
+            <a href="{% url 'profile' p.pk %}">
+                <img class="profile-pic" src="{{ p.profile_image_url }}" alt="{{ p.username }}">
+                {{ p.display_name }} ({{ p.username }})
+            </a>
+            
+        {% empty %}
+            <p>No matching profiles.</p>
+        {% endfor %}
+
+    <h3>Matching Posts</h3>
+
+    {% for post in posts %}
+        <div class="specific-post">
+
+            <img class="posts-pic" src="{{ post.display_image_url }}" alt="">
+
+            <p><strong>{{ post.profile.display_name }}</strong> {{ post.caption }}</p>
+            <p>{{ post.timestamp }}</p>
+
+            <p><strong>Likes:</strong> {{ post.get_likes }}</p>
+
+            <h4>Comments</h4>
+            <ul>
+                {% for comment in post.get_all_comments %}
+                    <li>
+                        <strong>{{ comment.profile.display_name }}</strong>
+                        ({{ comment.timestamp }}): {{ comment.text }}
+                    </li>
+                    
+                {% empty %}
+                    <li>No comments yet.</li>
+                {% endfor %}
+            </ul>
+            <hr>
+        </div>
+    {% empty %}
+        <p>No matching posts.</p>
+    {% endfor %}
+
+
+{% endblock %}
+
+
+

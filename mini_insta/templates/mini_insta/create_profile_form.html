@@ -1,0 +1,22 @@
+<!-- File: create_post_form.html
+Author: Niyoo Nedi (nnedi@bu.edu), 03/06/2026
+Description: File that will contain the form to create a profile for the mini_insta project -->
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+    <h2>Create Your Profile</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <h3>Account Information</h3>
+        {{ user_form.as_p }}
+
+        <h3>Profile Information</h3>
+        {{ form.as_p }}
+
+        <button type="submit">Create Profile</button>
+    </form>
+
+{% endblock %}

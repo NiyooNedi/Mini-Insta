@@ -1,0 +1,21 @@
+<!-- File: show_all_profiles.html
+Author: Niyoo Nedi (nnedi@bu.edu), 2/13/2026
+Description: File that contains the html that shows all profiles for the mini_insta project -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="whole-page">
+        {% for profile in profiles %}
+            <div class="single-profile">
+                <h2 class="username">{{profile.username}}</h2>
+                <a href="{% url 'profile' profile.pk %}">
+                    <img class="profile-pic" src="{{profile.profile_image_url}}" alt="">
+                </a>
+                <h2 class="display-name">{{profile.display_name}}</h2>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
